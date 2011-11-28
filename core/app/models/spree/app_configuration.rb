@@ -44,6 +44,7 @@ module Spree
     preference :check_for_spree_alerts, :boolean, :default => true
     preference :dismissed_spree_alerts, :string, :default => ''
     preference :last_check_for_spree_alerts, :string, :default => nil
+    preference :default_tax_zone, :string, :default => nil
 
     validates :name, :presence => true, :uniqueness => true
 
