@@ -33,8 +33,8 @@ module Spree
     scope :optional, where(:mandatory => false)
     scope :eligible, where(:eligible => true)
 
-    after_save { order.update! }
-    after_destroy { order.update! }
+    after_save { adjustable.update! if adjustable.is_a? Order }
+    after_destroy { adjustable.update! if adjustable.is_a? Order }
 
     # Update the boolean _eligible_ attribute which deterimes which adjustments count towards the order's
     # adjustment_total.
