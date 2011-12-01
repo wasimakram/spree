@@ -21,7 +21,7 @@
 #
 module Spree
   class Adjustment < ActiveRecord::Base
-    belongs_to :order
+    belongs_to :adjustable, :polymorphic => true
     belongs_to :source, :polymorphic => true
     belongs_to :originator, :polymorphic => true
 
