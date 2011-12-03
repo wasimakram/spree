@@ -11,11 +11,6 @@ module Spree
             Rails.application.config.spree.calculators.send(self.to_s.tableize.gsub('/', '_').sub('spree_', ''))
           end
 
-          #Remove in 0.80.0
-          def self.register(*args)
-            ActiveSupport::Deprecation.warn("Calculator registration has changed, add your calculator to the relevant Rails.application.config.spree.calculators collection.", caller)
-          end
-
           include InstanceMethods
         end
       end
