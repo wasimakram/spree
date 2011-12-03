@@ -2,29 +2,13 @@ module Spree
   module Core
     module CalculatedAdjustments
       module ClassMethods
-        def calculated_adjustments(options = {})
+        def calculated_adjustments
           has_one   :calculator, :as => :calculable, :dependent => :destroy
           accepts_nested_attributes_for :calculator
           validates :calculator, :presence => true if options[:require]
 
           def self.calculators
             Rails.application.config.spree.calculators.send(self.to_s.tableize.gsub('/', '_').sub('spree_', ''))
-          end
-
-          if options[:default]
-            default_calculator_class = options[:default]
-            #if default_calculator_class.available?(self.new)
-              before_create :default_calculator
-              define_method(:default_calculator) do
-                self.calculator ||= default_calculator_class.new
-              end
-            # else
-            #   raise(ArgumentError, "calculator #{default_calculator_class} can't be used with #{self}")
-            # end
-          else
-            define_method(:default_calculator) do
-              nil
-            end
           end
 
           #Remove in 0.80.0
