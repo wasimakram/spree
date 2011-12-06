@@ -18,7 +18,6 @@ module Spree
 
       case member && member.zoneable_type
       when 'Spree::State' then 'state'
-      when 'Spree::Zone'  then 'zone'
       else
         'country'
       end
@@ -40,8 +39,6 @@ module Spree
       # NOTE: This is complicated by the fact that include? for HMP is broken in Rails 2.1 (so we use awkward index method)
       members.any? do |zone_member|
         case zone_member.zoneable_type
-        when 'Spree::Zone'
-          zone_member.zoneable.include?(address)
         when 'Spree::Country'
           zone_member.zoneable_id == address.country_id
         when 'Spree::State'
@@ -70,8 +67,6 @@ module Spree
     def country_list
       members.map {|zone_member|
         case zone_member.zoneable_type
-        when 'Zone'
-          zone_member.zoneable.country_list
         when 'Country'
           zone_member.zoneable
         when 'State'
@@ -92,10 +87,10 @@ module Spree
     end
 
     private
-      def remove_defunct_members
-        zone_members.each do |zone_member|
-          zone_member.destroy if zone_member.zoneable_id.nil?
-        end
+    def remove_defunct_members
+      zone_members.each do |zone_member|
+        zone_member.destroy if zone_member.zoneable_id.nil?
       end
+    end
   end
 end
